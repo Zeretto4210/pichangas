@@ -1,0 +1,8 @@
+.App {
+  background-image: url('./images/bg-image.png');
+  height:100%;
+  background-repeat:repeat;
+}
+p {
+  color:white;
+}
