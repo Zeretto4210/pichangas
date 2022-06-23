@@ -29,7 +29,6 @@ function App() {
           <Route path="contact" element={<Main_Contacto />} />
           <Route path="aboutus" element={<Main_SobreNosotros />} />
           <Route path="login" element={<Main_IniciarSesion />} />
-          amogus
         </Routes>
         <Footer />
       </div>
