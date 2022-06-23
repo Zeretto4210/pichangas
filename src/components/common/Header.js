@@ -20,7 +20,7 @@ function Header(){
                 <Nav.Link href="/create">Crear una Cuenta</Nav.Link>
                 <Nav.Link href="/login">Iniciar Sesión</Nav.Link>
             </Nav>
-            <NavDropdown disabled>
+            <NavDropdown >
                 <Nav.Link href="/user/editprofile">Editar Perfil</Nav.Link>
                 <Nav.Link href="/user/myreservations">Ver Mis Reservas</Nav.Link>
                 <NavDropdown.Divider />
