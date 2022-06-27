@@ -23,6 +23,7 @@ function App() {
     <div className='App'>
       <Router>
         <Header />
+        <div className='content'>
         <Routes>
           <Route path="" element={<Main_Index />} />
           <Route path="fields" element={<Main_ListaCanchas />} />
@@ -34,6 +35,7 @@ function App() {
           <Route path="adminmenu" element={<AdminMenu_Index />} />
           <Route path="clientmenu" element={<ClientMenu_Index />} />
         </Routes>
+        </div>
         <Footer />
     </Router>
     </div>
