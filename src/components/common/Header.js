@@ -4,8 +4,13 @@ import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-
+import {auth} from './../../firebase';
+import { signOut } from 'firebase/auth';
 function Header(){
+    const handleLogout = () => {
+        signOut(auth);
+      };
+
     return (
         <Navbar variant="dark" className="color-nav" expand="lg">
         <Container>
@@ -24,7 +29,7 @@ function Header(){
                 <Nav.Link href="/user/editprofile">Editar Perfil</Nav.Link>
                 <Nav.Link href="/user/myreservations">Ver Mis Reservas</Nav.Link>
                 <NavDropdown.Divider />
-                <Nav.Link href="/logout">Cerrar Sesión</Nav.Link>
+                <Nav.Link href="/logout" onClick={handleLogout}>Cerrar Sesión</Nav.Link>
             </NavDropdown>
             </Navbar.Collapse>
         </Container>
