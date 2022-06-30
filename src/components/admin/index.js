@@ -6,6 +6,7 @@ import MainCrearCuenta from '../main/crearcuenta';
 import AdminReservas from './Reserva';
 import AdminUsuarios from './Usuarios';
 import ModalForm from './Modal';
+import AdminRegistros from './registros';
 function AdminIndex() {
     const { currentUser } = useAuthValue();
     return (
@@ -53,7 +54,7 @@ function AdminIndex() {
                                 <AdminReservas />
                             </Tab.Pane>
                             <Tab.Pane eventKey="#gescanchas">
-                                <AdminReservas />
+                                <AdminRegistros type={"Canchas"}/>
                             </Tab.Pane>
                             <Tab.Pane eventKey="#estadisticas">  
                                 <MainCrearCuenta />

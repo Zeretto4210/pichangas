@@ -19,7 +19,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  async function getRole(mail){
+  async function getUser(mail){
     const docRef = doc(db,`Usuarios/${mail}`);
     const docCif = await getDoc(docRef);
     const docInfo = docCif.data();
@@ -29,7 +29,7 @@ function App() {
   useEffect(() => {
     const unsuscribe = auth.onAuthStateChanged(user => {
       if(user){
-        const data = getRole(user.email);
+        const data = getUser(user.email);
       setCurrentUser(data);
       }
       else{
@@ -52,7 +52,7 @@ function App() {
               <Route path="/canchas" element={<MainListaCanchas />} />
               <Route path="/reservas" element={<MainReservas />} />
               <Route path="/crear" element={<MainCrearCuenta />} />
-              <Route path="/login" element={currentUser ?(currentUser.tipo == "Usuario" ? <Navigate to="/user/index" /> : <Navigate to="/admin/index" />) : <MainLogin />} />
+              <Route path="/login" element={currentUser ?(currentUser.tipo == "Administrador" ? <Navigate to="/admin/index" /> : <Navigate to="/user/index" />) : <MainLogin />} />
               <Route path="/user/index" element={currentUser ? <UserIndex /> : <Navigate to="/" />} />
               <Route path="/admin/index" element={currentUser ? <AdminIndex /> : <Navigate to="/" />} />
               <Route path="*" element={<Navigate to="" />} />
