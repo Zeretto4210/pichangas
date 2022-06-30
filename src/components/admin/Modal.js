@@ -84,6 +84,55 @@ function ModalForm(props) {
         }
       }
     }
+    else if (props.do=="Editar"){
+      if (props.type == "Clientes") {
+        if (claveRef.current.value !== clave2Ref.current.value) {
+          return setError('Claves no coinciden');
+        }
+        try {
+          setError('');
+          await auth.createUser({
+            email: emailRef.current.value,
+            emailVerified: false,
+            password: claveRef.current.value,
+            disabled: false
+          }).then(() => {
+            const docRef = doc(db, `Usuarios/${emailRef.current.value}`)
+            setDoc(docRef, {
+              correo: emailRef.current.value,
+              rut: rutRef.current.value,
+              nombres: nombresRef.current.value,
+              apellidopaterno: appatRef.current.value,
+              apellidomaterno: apmatRef.current.value,
+              telefono: telefonoRef.current.value,
+              celular: celularRef.current.value,
+              tipo: tipocuentaRef.current.value,
+              password: claveRef.current.value
+            });
+          });
+        }
+        catch (err) {
+          console.log(err);
+          return setError('Ocurrió un error al crear cuenta');
+        }
+      }
+      else if (props.type == "Canchas") {
+        try {
+          const docRef = doc(db, "Canchas",props.itemId);
+          setDoc(docRef, {
+            Nombre: nombreRef.current.value,
+            Descripcion: descripcionRef.current.value,
+            Capacidad: capacidadRef.current.value,
+            Valor: valorRef.current.value,
+            Imagen: imagenRef.current.value
+          });
+        }
+        catch (err) {
+          console.log(err);
+          return setError('Ocurrió un error al editar cancha');
+        }
+      }
+    }
   }
 
 
@@ -102,7 +151,7 @@ function ModalForm(props) {
             {props.type == "Canchas" ? (
               <> <Form.Group className="mb-3">
                 <Form.Label>Nombre</Form.Label>
-                <Form.Control type="text" ref={nombreRef} placeholder="Cancha 1" />
+                <Form.Control type="text" ref={nombreRef} value={props.do == "Editar" ? console.log(props.itemData.Nombre) : "" } placeholder="Cancha 1" />
               </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label>Descripcion</Form.Label>

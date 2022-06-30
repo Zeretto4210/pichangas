@@ -6,15 +6,17 @@ import {db} from './../../firebase';
 function AdminRegistros(props) {
     //Canchas
     const [canchas, setCanchas] = useState({});
+    const [loading, setLoading] = useState(true);
     async function getCanchas() {
         const querySnapshot = await getDocs(collection(db, "Canchas"));
         const p = [];
         querySnapshot.forEach((doc) => {
-            p.push(doc.data());
+            p.push({Id:doc.id,...doc.data()});
             
         });
         console.log(p);
         setCanchas(p);
+        setLoading(false);
     }
     useEffect(() => {
         getCanchas();
@@ -44,12 +46,11 @@ function AdminRegistros(props) {
           <td><img className="img-fluid" src={a.Imagen} /></td>
           <td>
             <tr>
-                <td><ModalForm do={"Editar"} type={"Canchas"}/></td>
-                <td><ModalForm do={"Archivar"} type={"Canchas"}/></td>
+                <td><ModalForm itemId={a.Id} itemData={a} do={"Editar"} type={"Canchas"}/></td>
+                <td><ModalForm itemId={a.Id} itemData={a} do={"Archivar"} type={"Canchas"}/></td>
             </tr>
           </td>
-        </tr>
-      ))};
+        </tr>))};
       </tbody>
     </Table>
     </>
