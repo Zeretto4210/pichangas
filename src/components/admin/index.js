@@ -5,6 +5,7 @@ import { Card, Row, Col,  ListGroup, Tab } from 'react-bootstrap';
 import MainCrearCuenta from '../main/crearcuenta';
 import AdminReservas from './Reserva';
 import AdminUsuarios from './Usuarios';
+import ModalForm from './Modal';
 function AdminIndex() {
     const { currentUser } = useAuthValue();
     return (
@@ -46,7 +47,7 @@ function AdminIndex() {
                                 <AdminReservas />
                             </Tab.Pane>
                             <Tab.Pane eventKey="#gesclientes">
-                                <AdminUsuarios />
+                                <AdminReservas />
                             </Tab.Pane>
                             <Tab.Pane eventKey="#geshoras">
                                 <AdminReservas />

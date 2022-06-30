@@ -1,7 +1,7 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 import EditReserva from './EditReservaModal';
-
+import ModalForm from './Modal';
 function AdminReservas() {
 
 
@@ -69,7 +69,12 @@ function AdminReservas() {
           <td colSpan={2}>Larry the Bird</td>
           <td>@twitter</td>
           <td>
-            <EditReserva/>
+            <ModalForm do={"Editar"} type={"Canchas"}/>
+            <ModalForm do={"Archivar"} type={"Canchas"}/>
+            <ModalForm do={"Agregar"} type={"Canchas"}/>
+            <ModalForm do={"Editar"} type={"Clientes"}/>
+            <ModalForm do={"Archivar"} type={"Clientes"}/>
+            <ModalForm do={"Agregar"} type={"Clientes"}/>
           </td>
         </tr>
       </tbody>
