@@ -45,13 +45,15 @@ function AdminIndex() {
                                 <MainCrearCuenta />
                             </Tab.Pane>
                             <Tab.Pane eventKey="#gesreservas">
-                                <AdminReservas />
+                                
+                            <AdminRegistros type={"Reservas"}/>
                             </Tab.Pane>
                             <Tab.Pane eventKey="#gesclientes">
-                                <AdminReservas />
+                                
+                            <AdminRegistros type={"Clientes"}/>
                             </Tab.Pane>
                             <Tab.Pane eventKey="#geshoras">
-                                <AdminReservas />
+                            <AdminRegistros type={"Horas"}/>
                             </Tab.Pane>
                             <Tab.Pane eventKey="#gescanchas">
                                 <AdminRegistros type={"Canchas"}/>

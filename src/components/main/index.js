@@ -3,7 +3,7 @@ function MainIndex(){
     return (
         <div>
             <div className='container-fluid'>
-                <img src=" https://dummyimage.com/1280x720/000000/ffffff" alt="" className="img-responsive center-block d-block mx-auto" />
+                <img src=" https://dummyimage.com/1280x720/000000/ffffff&text=-Logo llamativo de fondo-" alt="" className="img-responsive center-block d-block mx-auto" />
             </div>
             <div className="row justify-content-center">
                 <div className="col col-md-8 text-center">

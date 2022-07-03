@@ -27,7 +27,11 @@ function ModalForm(props) {
   const capacidadRef = useRef();
   const valorRef = useRef();
   const imagenRef = useRef();
-
+  //refs de reservas
+  const canchaRef = useRef();
+  const usuarioRef = useRef();
+  const fechaRef = useRef();
+  const estadoRef = useRef();
 
   const { currentUser } = useAuthValue();
 
@@ -36,19 +40,14 @@ function ModalForm(props) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if(props.do == "Agregar"){
+    if (props.do == "Agregar") {
       if (props.type == "Clientes") {
         if (claveRef.current.value !== clave2Ref.current.value) {
           return setError('Claves no coinciden');
         }
         try {
           setError('');
-          await auth.createUser({
-            email: emailRef.current.value,
-            emailVerified: false,
-            password: claveRef.current.value,
-            disabled: false
-          }).then(() => {
+          await createUserWithEmailAndPassword(auth, emailRef.current.value,claveRef.current.value).then(()=>{
             const docRef = doc(db, `Usuarios/${emailRef.current.value}`)
             setDoc(docRef, {
               correo: emailRef.current.value,
@@ -83,20 +82,31 @@ function ModalForm(props) {
           return setError('Ocurrió un error al registrar cancha');
         }
       }
+      else if (props.type == "Reservas" || props.type == "Horas") {
+        try {
+          const docRef = await addDoc(collection(db, "Reservas"), {
+           Cancha: canchaRef.current.value,
+           Usuario: usuarioRef.current.value,
+           Fecha: fechaRef.current.value,
+           Estado: props.type == "Reservas" ? "No Pagado" : "Pagado",
+           CalificacionServicio: 0,
+           CalificacionSistema:0,
+           CodigoAcceso:""
+          });
+        }
+        catch (err) {
+          console.log(err);
+          return setError('Ocurrió un error al registrar cancha');
+        }
+      }
     }
-    else if (props.do=="Editar"){
+    else if (props.do == "Editar") {
       if (props.type == "Clientes") {
         if (claveRef.current.value !== clave2Ref.current.value) {
           return setError('Claves no coinciden');
         }
         try {
           setError('');
-          await auth.createUser({
-            email: emailRef.current.value,
-            emailVerified: false,
-            password: claveRef.current.value,
-            disabled: false
-          }).then(() => {
             const docRef = doc(db, `Usuarios/${emailRef.current.value}`)
             setDoc(docRef, {
               correo: emailRef.current.value,
@@ -109,16 +119,16 @@ function ModalForm(props) {
               tipo: tipocuentaRef.current.value,
               password: claveRef.current.value
             });
-          });
+          ;
         }
         catch (err) {
           console.log(err);
-          return setError('Ocurrió un error al crear cuenta');
+          return setError('Ocurrió un error al editar cuenta');
         }
       }
       else if (props.type == "Canchas") {
         try {
-          const docRef = doc(db, "Canchas",props.itemId);
+          const docRef = doc(db, "Canchas", props.itemId);
           setDoc(docRef, {
             Nombre: nombreRef.current.value,
             Descripcion: descripcionRef.current.value,
@@ -151,7 +161,7 @@ function ModalForm(props) {
             {props.type == "Canchas" ? (
               <> <Form.Group className="mb-3">
                 <Form.Label>Nombre</Form.Label>
-                <Form.Control type="text" ref={nombreRef} value={props.do == "Editar" ? console.log(props.itemData.Nombre) : "" } placeholder="Cancha 1" />
+                <Form.Control type="text" ref={nombreRef}  placeholder="Cancha 1" />
               </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label>Descripcion</Form.Label>
@@ -217,7 +227,30 @@ function ModalForm(props) {
                     <Form.Control type="password" ref={clave2Ref} placeholder="********" />
                   </Form.Group></>
               ) : (
-                <>  </>
+                props.type == "Reservas" || props.type == "Horas"? (
+                  <><Form.Group className="mb-3">
+                    <Form.Label>Fecha</Form.Label>
+                    <Form.Control type="text" ref={fechaRef} placeholder="a" />
+                  </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Cancha</Form.Label>
+                      <Form.Select aria-label="Tipo de Cuenta" ref={canchaRef} >
+                        <option>Seleccionar</option>
+                        <option value="Cancha 1">Cancha 1</option>
+                        <option value="Cancha 2">Cancha 2</option>
+                      </Form.Select>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Usuario</Form.Label>
+                      <Form.Select aria-label="Tipo de Cuenta" ref={usuarioRef} >
+                        <option>Seleccionar</option>
+                        <option value="sus@sus.sus">sus@sus.sus</option>
+                        <option value="sas@sas.sas">sas@sas.sas</option>
+                      </Form.Select>
+                    </Form.Group></>
+                ) : (
+                  <></>
+                )
               )
             )}
           </Form>

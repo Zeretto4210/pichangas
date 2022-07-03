@@ -34,17 +34,17 @@ function UserMisReservas(){
 
       <Row className='containerInfo'>
         <Col className='containerBox'>
-          <h1 class="black"><b>Cancha Utilizada</b></h1>
+          <h1 className="black"><b>Cancha Utilizada</b></h1>
           <img src={require("https://dummyimage.com/800X480/000000/FFFFFF")}/>
-          <h3 class="black">Cancha N° X</h3>
-          <h2 class="black">★★★★☆</h2>
+          <h3 className="black">Cancha N° X</h3>
+          <h2 className="black">★★★★☆</h2>
         </Col>
         <Col className='containerBox'>
-          <p class="black">ID #22222222</p>
-          <p class="black">Fecha 22/02/2022</p>
-          <p class="black">Hora 22:22-22:22</p>
-          <p class="black">Valor $2.222</p>
-          <p class="black">Estado En espera de pago</p><br />
+          <p className="black">ID #22222222</p>
+          <p className="black">Fecha 22/02/2022</p>
+          <p className="black">Hora 22:22-22:22</p>
+          <p className="black">Valor $2.222</p>
+          <p className="black">Estado En espera de pago</p><br />
           <Button className='buttonPagar'>Ir a pagar</Button>
         </Col>
       </Row>

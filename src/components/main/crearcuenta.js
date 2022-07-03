@@ -41,6 +41,7 @@ function MainCrearCuenta() {
                     telefono: telefonoRef.current.value,
                     celular: celularRef.current.value,
                     tipo: tipocuentaRef.current.value,
+                    categoria: "Lv1. Basico",
                     password: claveRef.current.value
                 });
             });
