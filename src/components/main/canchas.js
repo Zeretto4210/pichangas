@@ -37,7 +37,7 @@ function MainListaCanchas() {
                 {Array.from(canchas).map((a) => (
                     <Col>
                         <Card>
-                            <Card.Img variant="top" src={a.Imagen} />
+                            <Card.Img variant="top" className="img2" src={a.Imagen} />
                             <Card.Body>
                                 <Card.Title>{a.Nombre}</Card.Title>
                                 <Card.Text className='black'>

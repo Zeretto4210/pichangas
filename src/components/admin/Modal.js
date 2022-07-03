@@ -4,7 +4,7 @@ import { useAuthValue } from '../context/AuthContext';
 import { db, auth } from './../../firebase';
 import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, createUser } from 'firebase/auth';
-
+import { Pencil, Trash, BagPlus , Bug } from 'react-bootstrap-icons';
 function ModalForm(props) {
   const [show, setShow] = useState(false);
 
@@ -148,8 +148,8 @@ function ModalForm(props) {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        {props.do}
+      <Button variant="primary" size="sm" onClick={handleShow}>
+        {props.do == "Editar" ? <Pencil /> : (props.do == "Archivar" ? <Trash /> : (props.do == "Agregar" ? <BagPlus /> : <Bug />))}
       </Button>
 
       <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>

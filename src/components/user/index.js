@@ -4,6 +4,7 @@ import { useAuthValue } from './../context/AuthContext';
 import { Card, Row, Col,  ListGroup, Tab } from 'react-bootstrap';
 import MainCrearCuenta from '../main/crearcuenta';
 import UserMisReservas from './misreservas';
+import UserReservar from './reservar';
 function UserIndex() {
     const { currentUser } = useAuthValue();
     return (
@@ -42,7 +43,7 @@ function UserIndex() {
                                 <UserMisReservas />
                             </Tab.Pane>
                             <Tab.Pane eventKey="#buscareserva">  
-                                <MainCrearCuenta />
+                                <UserReservar />
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>

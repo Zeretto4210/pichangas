@@ -2,7 +2,6 @@ import {React, useState} from 'react';
 import {Container, Row, Col, Form, Button, Stack, Nav} from 'react-bootstrap';
 import {db} from './../../firebase';
 import {setDoc, doc, Timestamp} from 'firebase/firestore';
-import './misreservas.css';
 
 function UserMisReservas(){
   return(
