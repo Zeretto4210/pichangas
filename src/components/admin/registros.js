@@ -1,7 +1,8 @@
 import { React, useState, useEffect } from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import ModalForm from './Modal';
-import { getDocs, collection, onSnapshot, query } from 'firebase/firestore';
+import { getDocs, collection, onSnapshot, query, Timestamp } from 'firebase/firestore';
+import {ArrowClockwise} from 'react-bootstrap-icons';
 import { db } from './../../firebase';
 function AdminRegistros(props) {
   //Canchas
@@ -72,8 +73,8 @@ function AdminRegistros(props) {
         if (props.type == "Canchas") {
           return (
             <>
-              <h1 className='white'>Lista de {props.type} <ModalForm do={"Agregar"} type={"Canchas"} /></h1>
-              <Table resposive striped bordered hover variant='light'>
+              <h1 className='white'>Lista de {props.type} <ModalForm do={"Agregar"} type={"Canchas"} /> <Button size="sm" onClick={getCanchas}> <ArrowClockwise /> </Button></h1>
+              <Table responsive striped bordered hover variant='light'>
                 <thead>
                   <tr>
                     <th>Nombre</th>
@@ -107,8 +108,8 @@ function AdminRegistros(props) {
         else if (props.type == "Reservas") {
           return (
             <>
-              <h1 className='white'>Lista de {props.type} <ModalForm do={"Agregar"} type={"Reservas"} /></h1>
-              <Table resposive striped bordered hover variant='light'>
+              <h1 className='white'>Lista de {props.type} <ModalForm do={"Agregar"} type={"Reservas"} /><Button size="sm" onClick={getCanchas}><ArrowClockwise /></Button></h1>
+              <Table responsive striped bordered hover variant='light'>
                 <thead>
                   <tr>
                     <th>ID</th>
@@ -123,7 +124,7 @@ function AdminRegistros(props) {
                   {Array.from(canchas).map((a) => (
                     a.Estado == "No Pagado" ? (<tr>
                       <td>{a.Id}</td>
-                      <td>{a.Fecha.toString()}</td>
+                      <td>{new Date(a.Fecha.seconds*1000).toString()}</td>
                       <td>{a.Cancha}</td>
                       <td>{a.Usuario}</td>
                       <td>{a.Estado}</td>
@@ -143,8 +144,8 @@ function AdminRegistros(props) {
         else if (props.type == "Horas") {
           return (
             <>
-              <h1 className='white'>Lista de {props.type} <ModalForm do={"Agregar"} type={"Horas"} /></h1>
-              <Table resposive striped bordered hover variant='light'>
+              <h1 className='white'>Lista de {props.type} <ModalForm do={"Agregar"} type={"Horas"} /><Button size="sm" onClick={getCanchas}><ArrowClockwise /></Button></h1>
+              <Table responsive striped bordered hover variant='light'>
                 <thead>
                   <tr>
                     <th>ID</th>
@@ -181,8 +182,8 @@ function AdminRegistros(props) {
         else if (props.type == "Clientes") {
           return (
             <>
-              <h1 className='white'>Lista de {props.type} <ModalForm do={"Agregar"} type={"Clientes"} /></h1>
-              <Table resposive striped bordered hover variant='light'>
+              <h1 className='white'>Lista de {props.type} <ModalForm do={"Agregar"} type={"Clientes"} /><Button size="sm" onClick={getCanchas}><ArrowClockwise /></Button></h1>
+              <Table responsive striped bordered hover variant='light'>
                 <thead>
                   <tr>
                     <th>Correo</th>

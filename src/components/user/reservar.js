@@ -10,7 +10,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { Search } from 'react-bootstrap-icons';
-
+import { getDocs, collection} from 'firebase/firestore'
+import {db} from './../../firebase'
 function UserReservar() {
 
   const [startDate, setStartDate] = useState(new Date());
@@ -23,16 +24,23 @@ function UserReservar() {
     const queryB = await getDocs(collection(db, "Reservas"));
     const a = [];
     const b = [];
-    queryB.forEach((doc) => {
-      p.push({ Id: doc.id, ...doc.data() });
-
+    queryA.forEach((doc) => {
+      a.push({ Id: doc.id, ...doc.data() });
     });
+    queryB.forEach((doc) => {
+      b.push({ Id: doc.id, ...doc.data() });
+    });
+    b.forEach((i)=>{
+    })
   }
 
   return (
     <Container fluid="md">
-      <Row className='justify-content-center'>
-        <Col className="topContainer2">
+      <Row className='justify-content-center text-center'>
+        <h1>Buscar una Reserva</h1>
+      </Row>
+      <Row className='justify-content-center text-center'>
+        <Col>
           <Card>
             <Card.Body>
               <Card.Title>Seleccionar Fecha</Card.Title>
@@ -40,6 +48,7 @@ function UserReservar() {
                 setStartDate(date);
                 console.log(date)
               }} />
+              <Card.Title></Card.Title>
               <Button onClick={handleSearch}><Search /> Buscar</Button>
             </Card.Body>
           </Card>

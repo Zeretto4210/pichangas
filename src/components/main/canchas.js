@@ -28,9 +28,10 @@ function MainListaCanchas() {
             </Row>
             <Row>
                 <Col className="text-center mx-auto d-block" md={8}>
-                    <p>Ut aperiam recusandae ea quia optio et adipisci laborum ut galisum alias. Aut rerum laborum et reprehenderit amet ut
-                        cumque exercitationem. Vel tempore voluptate qui esse et neque doloribus eum magni rerum nam voluptatem quas.
+                    <p>Nuestro complejo deportivo se caracteriza por contar con las mejores canchas para que nuestros queridos Clientes
+                        disfruten de un buen partido. Creadas con amor y dedicación para el gusto de los usuarios.
                     </p>
+                    <p>A continuación, te mostraremos las canchas que tenemos disponibles para ti.</p>
                 </Col>
             </Row>
             <Row xs={1} md={2} className="g-4">
@@ -54,6 +55,7 @@ function MainListaCanchas() {
                     </Col>
                 ))}
             </Row>
+            <Row><br/></Row>
             <Row>
                 <Col className="text-center mx-auto d-block" md={8}>
                     <Button href="/" variant="success" >Reserva tu Cancha</Button>

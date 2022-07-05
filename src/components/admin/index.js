@@ -1,12 +1,13 @@
 import React from 'react';
 import { auth } from './../../firebase';
 import { useAuthValue } from './../context/AuthContext';
-import { Card, Row, Col,  ListGroup, Tab } from 'react-bootstrap';
+import { Card, Row, Col, ListGroup, Tab } from 'react-bootstrap';
 import MainCrearCuenta from '../main/crearcuenta';
 import AdminReservas from './Reserva';
 import AdminUsuarios from './Usuarios';
 import ModalForm from './Modal';
 import AdminRegistros from './registros';
+import MainEnConstruccion from '../main/enconstruccion';
 function AdminIndex() {
     const { currentUser } = useAuthValue();
     return (
@@ -39,30 +40,30 @@ function AdminIndex() {
                         </Card.Body>
                     </Card>
                 </Col>
-                    <Col className='display'>
-                        <Tab.Content>
-                            <Tab.Pane eventKey="#edit">
-                                <MainCrearCuenta />
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="#gesreservas">
-                                
-                            <AdminRegistros type={"Reservas"}/>
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="#gesclientes">
-                                
-                            <AdminRegistros type={"Clientes"}/>
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="#geshoras">
-                            <AdminRegistros type={"Horas"}/>
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="#gescanchas">
-                                <AdminRegistros type={"Canchas"}/>
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="#estadisticas">  
-                                <MainCrearCuenta />
-                            </Tab.Pane>
-                        </Tab.Content>
-                    </Col>
+                <Col className='display'>
+                    <Tab.Content>
+                        <Tab.Pane eventKey="#edit">
+                            <MainCrearCuenta />
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="#gesreservas">
+
+                            <AdminRegistros type={"Reservas"} />
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="#gesclientes">
+
+                            <AdminRegistros type={"Clientes"} />
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="#geshoras">
+                            <AdminRegistros type={"Horas"} />
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="#gescanchas">
+                            <AdminRegistros type={"Canchas"} />
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="#estadisticas">
+                            <MainEnConstruccion />
+                        </Tab.Pane>
+                    </Tab.Content>
+                </Col>
             </Row>
         </Tab.Container>
     )

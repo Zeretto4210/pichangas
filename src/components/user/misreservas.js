@@ -34,7 +34,7 @@ function UserMisReservas(){
       <Row className='containerInfo'>
         <Col className='containerBox'>
           <h1 className="black"><b>Cancha Utilizada</b></h1>
-          <img src={require("https://dummyimage.com/800X480/000000/FFFFFF")}/>
+          <img />
           <h3 className="black">Cancha N° X</h3>
           <h2 className="black">★★★★☆</h2>
         </Col>
