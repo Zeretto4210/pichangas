@@ -118,3 +118,46 @@ h6 {
     padding: 0 10%;
     margin-bottom: auto;
 }
+.fillDatos {
+    background-color: #E8EAED;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 50px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    border-width: 2px;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.titulo {
+    text-align: center;
+    margin-top: 70px;
+}
+
+.nameCompleto {
+    margin-top: 20px;
+}
+
+.dato {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.box {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font: bold sans-serif;
+    font-size: x-large;
+}
+
+.button {
+    background-color: #002E06;
+    width: 200px;
+    font-size: large;
+    border: 1px solid black;
+    margin-bottom: 50px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}

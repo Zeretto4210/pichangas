@@ -16,7 +16,7 @@ function UserReservar() {
 
   const [startDate, setStartDate] = useState(new Date());
   const [canchasDisp, setCanchasDisp] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   async function handleSearch(e){
     e.preventDefault();

@@ -22,6 +22,7 @@ function ModalForm(props) {
   const tipocuentaRef = useRef();
   const claveRef = useRef();
   const clave2Ref = useRef();
+  const catcuentaRef= useRef();
   //refs de cancha
   const nombreRef = useRef();
   const descripcionRef = useRef();
@@ -130,6 +131,7 @@ function ModalForm(props) {
             telefono: telefonoRef.current.value,
             celular: celularRef.current.value,
             tipo: tipocuentaRef.current.value,
+            categoria: catcuentaRef.current.value,
             password: claveRef.current.value
           });
 
@@ -203,47 +205,57 @@ function ModalForm(props) {
               props.type == "Clientes" ? (
                 <> <Form.Group className="mb-3">
                   <Form.Label>Correo Electrónico</Form.Label>
-                  <Form.Control type="email" disabled={props.do == "Editar" ? true:false} value={props.do == "Editar" ? props.itemId:""} ref={emailRef} placeholder="correo@gmail.com" />
+                  <Form.Control type="email" disabled={props.do == "Editar" ? true:false} defaultValue={props.do == "Editar" ? props.itemId:""} ref={emailRef} placeholder="correo@gmail.com" />
                 </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>RUT</Form.Label>
-                    <Form.Control type="text" ref={rutRef} placeholder="12345678-9" />
+                    <Form.Control type="text" ref={rutRef} defaultValue={props.do == "Editar" ? props.itemData.rut:""} placeholder="12345678-9" />
                   </Form.Group>
                   <Form.Group className="mb-3" >
                     <Form.Label>Nombres</Form.Label>
-                    <Form.Control type="text" ref={nombresRef} value={props.do == "Editar" ? props.itemData.nombres:""}placeholder="Ramon Ramon" />
+                    <Form.Control type="text" ref={nombresRef} defaultValue={props.do == "Editar" ? props.itemData.nombres:""} placeholder="Ramon Ramon" />
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>Apellido Paterno</Form.Label>
-                    <Form.Control type="text" ref={appatRef} placeholder="Araneda" />
+                    <Form.Control type="text" ref={appatRef} defaultValue={props.do == "Editar" ? props.itemData.apellidopaterno:""} placeholder="Araneda" />
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>Apellido Materno</Form.Label>
-                    <Form.Control type="text" ref={apmatRef} placeholder="Carrasco" />
+                    <Form.Control type="text" ref={apmatRef} defaultValue={props.do == "Editar" ? props.itemData.apellidomaterno:""} placeholder="Carrasco" />
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>Teléfono</Form.Label>
-                    <Form.Control type="number" ref={telefonoRef} placeholder="912345678" />
+                    <Form.Control type="number" ref={telefonoRef} defaultValue={props.do == "Editar" ? props.itemData.telefono:""} placeholder="912345678" />
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>Celular</Form.Label>
-                    <Form.Control type="number" ref={celularRef} placeholder="912345678" />
+                    <Form.Control type="number" ref={celularRef} defaultValue={props.do == "Editar" ? props.itemData.celular:""} placeholder="912345678" />
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>Tipo de Cuenta</Form.Label>
-                    <Form.Select aria-label="Tipo de Cuenta" ref={tipocuentaRef} >
+                    <Form.Select aria-label="Tipo de Cuenta" ref={tipocuentaRef} defaultValue={props.do == "Editar" ? props.itemData.tipo:""}  >
                       <option>Seleccionar</option>
                       <option value="Usuario">Usuario</option>
                       <option value="Administrador">Administrador</option>
                     </Form.Select>
                   </Form.Group>
                   <Form.Group className="mb-3">
+                    <Form.Label>Categoria de Cuenta</Form.Label>
+                    <Form.Select aria-label="Categoria de Cuenta" ref={catcuentaRef} defaultValue={props.do == "Editar" ? props.itemData.categoria:""}  >
+                      <option>Seleccionar</option>
+                      <option value="Lv.1 Basico">Lv.1 Basico</option>
+                      <option value="Lv.2 Basico +">Lv.2 Basico +</option>
+                      <option value="Lv.3 Preferencial">Lv.3 Preferencial</option>
+                      <option value="Lv.4 VIP">Lv.4 VIP</option>
+                    </Form.Select>
+                  </Form.Group>
+                  <Form.Group className="mb-3">
                     <Form.Label>Contraseña</Form.Label>
-                    <Form.Control type="password" ref={claveRef} placeholder="********" />
+                    <Form.Control type="password" ref={claveRef} defaultValue={props.do == "Editar" ? props.itemData.password:""} placeholder="********" />
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>Repetir Contraseña</Form.Label>
-                    <Form.Control type="password" ref={clave2Ref} placeholder="********" />
+                    <Form.Control type="password" ref={clave2Ref} defaultValue={props.do == "Editar" ? props.itemData.password:""} placeholder="********" />
                   </Form.Group></>
               ) : (
                 props.type == "Reservas" || props.type == "Horas" ? (
