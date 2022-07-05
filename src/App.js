@@ -14,6 +14,8 @@ import MainLogin from './components/main/login';
 import UserIndex from './components/user/index';
 import AdminIndex from './components/admin/index';
 import { AuthProvider } from './components/context/AuthContext';
+import UserMisReservas from './components/user/misreservas';
+import UserReservar from './components/user/reservar';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -50,7 +52,7 @@ function App() {
             <Routes>
               <Route path="/" element={<MainIndex />} />
               <Route path="/canchas" element={<MainListaCanchas />} />
-              <Route path="/reservas" element={<MainReservas />} />
+              <Route path="/reservas" element={<UserReservar />} />
               <Route path="/crear" element={<MainCrearCuenta />} />
               <Route path="/login" element={currentUser ?(currentUser.tipo == "Administrador" ? <Navigate to="/admin/index" /> : <Navigate to="/user/index" />) : <MainLogin />} />
               <Route path="/user/index" element={currentUser ? <UserIndex /> : <Navigate to="/" />} />

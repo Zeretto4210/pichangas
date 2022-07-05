@@ -9,79 +9,57 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
+import { Search } from 'react-bootstrap-icons';
 
-function UserReservar(){
+function UserReservar() {
 
   const [startDate, setStartDate] = useState(new Date());
+  const [canchasDisp, setCanchasDisp] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  async function handleSearch(e){
+    e.preventDefault();
+    const queryA = await getDocs(collection(db, "Canchas"));
+    const queryB = await getDocs(collection(db, "Reservas"));
+    const a = [];
+    const b = [];
+    queryB.forEach((doc) => {
+      p.push({ Id: doc.id, ...doc.data() });
+
+    });
+  }
 
   return (
-    <Container fluid="sm">
+    <Container fluid="md">
       <Row className='justify-content-center'>
-        <Col className="topContainers">
+        <Col className="topContainer2">
           <Card>
             <Card.Body>
-              <Card.Title>Fecha</Card.Title>
-              <DatePicker className="mb-3" selected={startDate} onChange={(date:Date) => {
+              <Card.Title>Seleccionar Fecha</Card.Title>
+              <DatePicker showTimeSelect timeIntervals={60} dateFormat="dd/MM/yyyy h:mm aa" minTime={new Date().setHours(10)} maxTime={new Date().setHours(20)} timeCaption="Hora" minDate={new Date().setMinutes(0)} selected={startDate} onChange={(date: Date) => {
                 setStartDate(date);
-                console.log(date)}} />
-              <Card.Title>Hora</Card.Title>
-                <Form.Group className="mb-3">
-                  <Form.Select >
-                    <option>00:00</option>
-                    <option>22:22</option>
-                  </Form.Select>
-                </Form.Group>
-            </Card.Body>           
+                console.log(date)
+              }} />
+              <Button onClick={handleSearch}><Search /> Buscar</Button>
+            </Card.Body>
           </Card>
         </Col>
-      </Row>    
-      <Row>
-        <Table className='table' striped bordered hover size="sm">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Nombre</th>
-              <th>Valorización</th>
-              <th>Descripción</th>
-              <th>Precio</th>
-              <th>Opciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>El cuartel general</td>
-              <td>★★★★☆</td>
-              <th>sdfas</th>
-              <td>$2.000</td>
-              <td>
-                <Button>Elegir</Button>
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Hanna la última jugada</td>
-              <td>★★★★☆</td>
-              <th>asd</th>
-              <td>$2.000</td>
-              <td>
-                <Button>Elegir</Button>
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Horseman o hombre caballo</td>
-              <td>★★★★☆</td>
-              <th>ffff</th>
-              <td>$2.000</td>
-              <td>
-                <Button>Elegir</Button>
-              </td>
-            </tr>
-          </tbody>
-        </Table>
       </Row>
-    </Container>      
+      <Row>
+        {loading ? (<></>) : (
+          Array.from(canchasDisp).length == 0 ? (<p>NO HAY CANCHAS DISPONIBLES</p>) : (Array.from(canchasDisp).map((a) => (
+            <tr>
+              <td>{a.Nombre}</td>
+              <td>{a.Descripcion}</td>
+              <td>{a.Capacidad} personas</td>
+              <td>$ {a.Valor}</td>
+              <td><img className="img-fluid" src={a.Imagen} /></td>
+              <td><Button /></td>
+            </tr>
+          )))
+        )}
+      </Row>
+    </Container>
   );
 }
 export default UserReservar;

@@ -1,5 +1,4 @@
 import React from 'react';
-import './footer.css';
 import {Navbar, Nav} from 'react-bootstrap';
 function PageFooter(){
     return (

@@ -1,11 +1,19 @@
 .App {
     background-image: url('./files/bg-image.png');
-    background-repeat:repeat;
+    background-repeat: repeat;
     height: 100%;
 }
-p, h1, h2, h3, h4, h5, h6 {
-    color:white;
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: white;
 }
+
 .content {
     width: 100%;
     margin: 0;
@@ -16,16 +24,20 @@ p, h1, h2, h3, h4, h5, h6 {
     flex: 1;
     min-height: 100vh;
 }
+
 .img-responsive {
-    margin:0 auto;
-    width:100%;
+    margin: 0 auto;
+    width: 100%;
 }
+
 .black {
-    color:black;
+    color: black;
 }
+
 .white {
-    color:white;
+    color: white;
 }
+
 .topButtonsBox {
     margin-top: 90px;
     margin-bottom: 10px;
@@ -35,7 +47,7 @@ p, h1, h2, h3, h4, h5, h6 {
     background-color: white;
     color: black;
     border: 1px solid black;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .tabs {
@@ -69,7 +81,7 @@ p, h1, h2, h3, h4, h5, h6 {
     width: 200px;
     font-size: large;
     border: 1px solid black;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .table {
@@ -77,18 +89,32 @@ p, h1, h2, h3, h4, h5, h6 {
     margin-bottom: 90px;
     text-align: center;
     font-size: large;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.topContainers {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.topContainer2 {
+    justify-content: left;
+    align-items: left;
     margin-bottom: 20px;
-    text-align: center;
+    text-align: left;
     margin-top: 90px;
+    width: 400px;
 }
 
-.img2{
-    height:300px;
+.img2 {
+    height: 300px;
+}
+
+.footer {
+    height: auto;
+    background: black;
+    padding: 0 10%;
+    margin-top: auto;
+}
+
+.header {
+    background-color: rgb(0, 46, 6);
+    height: auto;
+    padding: 0 10%;
+    margin-bottom: auto;
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import './header.css';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useAuthValue } from "./../components/context/AuthContext"
