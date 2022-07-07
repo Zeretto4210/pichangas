@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Spinner, Col, Row } from 'react-bootstrap';
 import ModalForm from './Modal';
 import { getDocs, collection, onSnapshot, query, Timestamp } from 'firebase/firestore';
 import { ArrowClockwise } from 'react-bootstrap-icons';
@@ -33,6 +33,7 @@ function AdminRegistros(props) {
   const [canchas, setCanchas] = useState({});
   const [loading, setLoading] = useState(true);
   async function getCanchas() {
+    setLoading(true);
     var querySnapshot = null;
     switch (props.type) {
       case "Canchas": {
@@ -62,22 +63,15 @@ function AdminRegistros(props) {
 
     });
     setCanchas(p);
+    setLoading(false);
   }
 
-  const q = query(collection(db, t));
-  const unsubscribe = onSnapshot(q, (snapshot) => {
-    snapshot.docChanges().forEach((change) => {
-      getCanchas();
-    });
-  });
   useEffect(() => {
     getCanchas();
-    console.log(canchas);
-
     setLoading(false);
   }, []);
   if (loading) {
-    return (<p>Loading</p>);
+    return (<Row ><Col className="d-flex justify-content-center"><Spinner animation="border"  variant="primary" /></Col></Row>);
   }
   else {
     if (props.type == "Canchas") {
@@ -122,7 +116,6 @@ function AdminRegistros(props) {
           <Table responsive striped bordered hover variant='light'>
             <thead>
               <tr>
-                <th>ID</th>
                 <th>Fecha</th>
                 <th>Cancha</th>
                 <th>Usuario</th>
@@ -133,7 +126,6 @@ function AdminRegistros(props) {
             <tbody>
               {Array.from(canchas).map((a) => (
                 a.Estado == "No Pagado" ? (<tr>
-                  <td>{a.Id}</td>
                   <td>{new Date(a.Fecha.seconds*1000).toLocaleDateString('es-CL',{weekday:'long', year:'numeric',month:'long', day:'numeric'})}, {new Date(a.Fecha.seconds*1000).toLocaleTimeString('es-CL')}</td>
                   <td>{a.Cancha}</td>
                   <td>{a.Usuario}</td>
@@ -158,7 +150,6 @@ function AdminRegistros(props) {
           <Table responsive striped bordered hover variant='light'>
             <thead>
               <tr>
-                <th>ID</th>
                 <th>Fecha</th>
                 <th>Cancha</th>
                 <th>Usuario</th>
@@ -170,7 +161,6 @@ function AdminRegistros(props) {
             <tbody>
               {Array.from(canchas).map((a) => (
                 a.Estado == "Pagado" ? (<tr>
-                  <td>{a.Id}</td>
                   <td>{new Date(a.Fecha.seconds*1000).toLocaleDateString('es-CL',{weekday:'long', year:'numeric',month:'long', day:'numeric'})}, {new Date(a.Fecha.seconds*1000).toLocaleTimeString('es-CL')}</td>
                   <td>{a.Cancha}</td>
                   <td>{a.Usuario}</td>

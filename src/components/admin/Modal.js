@@ -216,7 +216,6 @@ function ModalForm(props) {
             CodigoAcceso: props.type == "Reservas" ? "" : makeid(25)
           });
           setSubmit(2);
-
           handleClose();
         }
         catch (err) {
