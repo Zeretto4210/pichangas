@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Spinner } from 'react-bootstrap';
 import { doc, collection, onSnapshot, getDocs, query } from "firebase/firestore";
 import { db } from './../../firebase';
 
 function MainListaCanchas() {
     const [canchas, setCanchas] = useState({});
+    const [loading, setLoading] = useState(true);
     async function getCanchas() {
+        setLoading(true);
         const querySnapshot = await getDocs(collection(db, "Canchas"));
         const p = [];
         querySnapshot.forEach((doc) => {
             p.push(doc.data());
             
         });
-        console.log(p);
         setCanchas(p);
+        setLoading(false);
     }
     useEffect(() => {
         getCanchas();
-        console.log(canchas);
     }, []);
     return (
         <Container fluid="md">
@@ -34,6 +35,7 @@ function MainListaCanchas() {
                     <p>A continuación, te mostraremos las canchas que tenemos disponibles para ti.</p>
                 </Col>
             </Row>
+            {!loading ? (<></>) : (<><Row ><Col className="d-flex justify-content-center"><Spinner animation="border"  variant="primary" /></Col></Row></>)}
             <Row xs={1} md={2} className="g-4">
                 {Array.from(canchas).map((a) => (
                     <Col>
@@ -42,10 +44,10 @@ function MainListaCanchas() {
                             <Card.Body>
                                 <Card.Title>{a.Nombre}</Card.Title>
                                 <Card.Text className='black'>
-                                    <strong>Capacidad:</strong> {a.Capacidad}
+                                    <strong>Capacidad:</strong> {a.Capacidad} personas
                                 </Card.Text>
                                 <Card.Text className='black'>
-                                    <strong>Valor:</strong>  {a.Valor}
+                                    <strong>Valor:</strong>  $ {a.Valor}
                                 </Card.Text>
                                 <Card.Text className='black'>
                                     <strong>Descripción:</strong>  {a.Descripcion}
@@ -55,12 +57,13 @@ function MainListaCanchas() {
                     </Col>
                 ))}
             </Row>
-            <Row><br/></Row>
+            {loading ? (<></>) : (<><Row><br/></Row>
             <Row>
                 <Col className="text-center mx-auto d-block" md={8}>
                     <Button href="/" variant="success" >Reserva tu Cancha</Button>
                 </Col>
-            </Row>
+            </Row></>)}
+            
         </Container>
     );
 }

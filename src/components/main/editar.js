@@ -6,7 +6,7 @@ function MainEditar() {
         <><Container fluid="sm">
           <Row>
             <h1 className='titulo'>Editar Perfil</h1>
-            <image src="https://dummyimage.com/800x480/000000/ffffff" />
+            <img src="https://dummyimage.com/800x480/000000/ffffff" />
           </Row>
           <Row className='fillDatos'>
             <Form>

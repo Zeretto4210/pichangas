@@ -25,6 +25,10 @@ function AdminRegistros(props) {
       t = "Usuarios";
       break;
     }
+    case "Perfil": {
+      t = "Usuarios";
+      break;
+    }
   }
   const [canchas, setCanchas] = useState({});
   const [loading, setLoading] = useState(true);
@@ -44,6 +48,10 @@ function AdminRegistros(props) {
         break;
       }
       case "Clientes": {
+        querySnapshot = await getDocs(collection(db, "Usuarios"));
+        break;
+      }
+      case "Perfil": {
         querySnapshot = await getDocs(collection(db, "Usuarios"));
         break;
       }
@@ -75,7 +83,7 @@ function AdminRegistros(props) {
     if (props.type == "Canchas") {
       return (
         <>
-          <h1 className='white'>Lista de {props.type} <ModalForm do={"Agregar"} type={"Canchas"} /> <Button size="sm" onClick={getCanchas}> <ArrowClockwise /> </Button></h1>
+          <h1 className='white'>Lista de {props.type} <ModalForm do={"Agregar"} type={"Canchas"} /> <Button onClick={getCanchas}> <ArrowClockwise /> </Button></h1>
           <Table responsive striped bordered hover variant='light'>
             <thead>
               <tr>
@@ -94,14 +102,14 @@ function AdminRegistros(props) {
                   <td>{a.Descripcion}</td>
                   <td>{a.Capacidad} personas</td>
                   <td>$ {a.Valor}</td>
-                  <td><img className="img-fluid" src={a.Imagen} /> <ModalImage imglink={a.Imagen} /></td>
+                  <td><ModalImage imglink={a.Imagen}/></td>
                   <td>
                     <tr>
                       <td><ModalForm itemId={a.Id} itemData={a} do={"Editar"} type={"Canchas"} /></td>
                       <td><ModalForm itemId={a.Id} itemData={a} do={"Archivar"} type={"Canchas"} /></td>
                     </tr>
                   </td>
-                </tr>))};
+                </tr>))}
             </tbody>
           </Table>
         </>
@@ -110,7 +118,7 @@ function AdminRegistros(props) {
     else if (props.type == "Reservas") {
       return (
         <>
-          <h1 className='white'>Lista de {props.type} <ModalForm do={"Agregar"} type={"Reservas"} /><Button size="sm" onClick={getCanchas}><ArrowClockwise /></Button></h1>
+          <h1 className='white'>Lista de {props.type} <ModalForm do={"Agregar"} type={"Reservas"} /> <Button onClick={getCanchas}><ArrowClockwise /></Button></h1>
           <Table responsive striped bordered hover variant='light'>
             <thead>
               <tr>
@@ -126,7 +134,7 @@ function AdminRegistros(props) {
               {Array.from(canchas).map((a) => (
                 a.Estado == "No Pagado" ? (<tr>
                   <td>{a.Id}</td>
-                  <td>{new Date(a.Fecha.seconds * 1000).toLocaleDateString('es-CL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</td>
+                  <td>{new Date(a.Fecha.seconds*1000).toLocaleDateString('es-CL',{weekday:'long', year:'numeric',month:'long', day:'numeric'})}</td>
                   <td>{a.Cancha}</td>
                   <td>{a.Usuario}</td>
                   <td>{a.Estado}</td>
@@ -146,7 +154,7 @@ function AdminRegistros(props) {
     else if (props.type == "Horas") {
       return (
         <>
-          <h1 className='white'>Lista de {props.type} <ModalForm do={"Agregar"} type={"Horas"} /><Button size="sm" onClick={getCanchas}><ArrowClockwise /></Button></h1>
+          <h1 className='white'>Lista de {props.type} <ModalForm do={"Agregar"} type={"Horas"} /> <Button onClick={getCanchas}><ArrowClockwise /></Button></h1>
           <Table responsive striped bordered hover variant='light'>
             <thead>
               <tr>
@@ -163,16 +171,16 @@ function AdminRegistros(props) {
               {Array.from(canchas).map((a) => (
                 a.Estado == "Pagado" ? (<tr>
                   <td>{a.Id}</td>
-                  <td>{new Date(a.Fecha.seconds * 1000).toLocaleDateString('es-CL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</td>
+                  <td>{new Date(a.Fecha.seconds*1000).toLocaleDateString('es-CL',{weekday:'long', year:'numeric',month:'long', day:'numeric'})}</td>
                   <td>{a.Cancha}</td>
                   <td>{a.Usuario}</td>
                   <td>{a.Estado}</td>
                   <td>{a.CodigoAcceso}</td>
                   <td>
-                    <tr>
-                      <td><ModalForm itemId={a.Id} itemData={a} do={"Editar"} type={"Horas"} /></td>
-                      <td><ModalForm itemId={a.Id} itemData={a} do={"Archivar"} type={"Horas"} /></td>
-                    </tr>
+                    
+                      <ModalForm itemId={a.Id} itemData={a} do={"Editar"} type={"Horas"} />
+                      <ModalForm itemId={a.Id} itemData={a} do={"Archivar"} type={"Horas"} />
+                    
                   </td>
                 </tr>) : (<></>)
               ))}
@@ -181,10 +189,10 @@ function AdminRegistros(props) {
         </>
       );
     }
-    else if (props.type == "Clientes") {
+    else if (props.type == "Clientes") {  //HERE
       return (
         <>
-          <h1 className='white'>Lista de {props.type} <ModalForm do={"Agregar"} type={"Clientes"} /><Button size="sm" onClick={getCanchas}><ArrowClockwise /></Button></h1>
+          <h1 className='white'>Lista de {props.type} <ModalForm do={"Agregar"} type={"Clientes"} /> <Button onClick={getCanchas}><ArrowClockwise /></Button></h1>
           <Table responsive striped bordered hover variant='light'>
             <thead>
               <tr>
@@ -207,10 +215,43 @@ function AdminRegistros(props) {
                   <td>{a.categoria}</td>
                   <td>{a.tipo}</td>
                   <td>
-                    <tr>
-                      <td><ModalForm itemId={a.Id} itemData={a} do={"Editar"} type={"Clientes"} /></td>
-                      <td><ModalForm itemId={a.Id} itemData={a} do={"Archivar"} type={"Clientes"} /></td>
-                    </tr>
+                    <ModalForm itemId={a.Id} itemData={a} do={"Editar"} type={"Clientes"} />
+                    <ModalForm itemId={a.Id} itemData={a} do={"Archivar"} type={"Clientes"} />
+                  </td>
+                </tr>))}
+            </tbody>
+          </Table>
+        </>
+      );
+    }
+    else if (props.type == "Perfil") {  //HERE
+      return (
+        <>
+          <h1 className='white'>Lista de {props.type} <ModalForm do={"Agregar"} type={"Perfil"} /> <Button onClick={getCanchas}><ArrowClockwise /></Button></h1>
+          <Table responsive striped bordered hover variant='light'>
+            <thead>
+              <tr>
+                <th>Correo</th>
+                <th>RUT</th>
+                <th>Nombre Completo</th>
+                <th>Telefonos</th>
+                <th>Categoria</th>
+                <th>Tipo</th>
+                <th>Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Array.from(canchas).map((a) => (
+                <tr>
+                  <td>{a.correo}</td>
+                  <td>{a.rut}</td>
+                  <td>{a.nombres} {a.apellidopaterno} {a.apellidomaterno}</td>
+                  <td>{a.telefono} - {a.celular}</td>
+                  <td>{a.categoria}</td>
+                  <td>{a.tipo}</td>
+                  <td>
+                    <ModalForm itemId={a.Id} itemData={a} do={"Editar"} type={"Perfil"} />
+                    <ModalForm itemId={a.Id} itemData={a} do={"Archivar"} type={"Perfil"} />
                   </td>
                 </tr>))}
             </tbody>

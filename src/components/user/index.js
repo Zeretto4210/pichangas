@@ -5,20 +5,22 @@ import { Card, Row, Col,  ListGroup, Tab } from 'react-bootstrap';
 import MainCrearCuenta from '../main/crearcuenta';
 import UserMisReservas from './misreservas';
 import UserReservar from './reservar';
+import ModalForm from './../admin/Modal'
 import MainEditar from '../main/editar';
 function UserIndex() {
     const { currentUser } = useAuthValue();
+
+
     return (
         <Tab.Container id="list-group-tabs" fluid="md">
             <Row>
                 <Col sm={3}>
                     <Card className='card a'>
                         <Card.Body className='body'>
-                            <Card.Title className="name">Bienvenido, <strong>{currentUser.nombres}</strong></Card.Title>
+                            <Card.Title className="name">Bienvenido, <strong>{currentUser.nombres} </strong>
+                                <ModalForm itemId={currentUser.correo} itemData={currentUser} do={"Editar"} type={"Perfil"} />
+                            </Card.Title>
                             <ListGroup>
-                                <ListGroup.Item className='listItem' action href="#edit">
-                                    Editar Perfil
-                                </ListGroup.Item>
                                 <ListGroup.Item className='listItem' action href="#misagendamientos">
                                     Mis Agendamientos
                                 </ListGroup.Item>
@@ -35,7 +37,7 @@ function UserIndex() {
                     <Col className='display'>
                         <Tab.Content>
                             <Tab.Pane eventKey="#edit">
-                                <MainEditar />
+                               
                             </Tab.Pane>
                             <Tab.Pane eventKey="#misagendamientos">
                                 <UserMisReservas />

@@ -3,7 +3,7 @@ function MainIndex(){
     return (
         <div>
             <div className='container-fluid'>
-                <img src={require('./../../files/LasPichangas.png')} alt="" className="img-responsive center-block d-block mx-auto" />
+                <img src={require('./../../files/LasPichangas2.png')} alt="" className="img-responsive center-block d-block mx-auto" />
             </div>
             <div className="row justify-content-center">
                 <div className="col col-md-8 text-center">

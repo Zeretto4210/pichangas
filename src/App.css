@@ -104,7 +104,12 @@ h6 {
 .img2 {
     height: 300px;
 }
-
+.img3 {
+    width: 100%;
+}
+.img4 {
+    height: 100%;
+}
 .footer {
     height: auto;
     background: black;
