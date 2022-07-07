@@ -6,6 +6,18 @@ import { addDoc, collection, doc, setDoc, Timestamp } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, createUser } from 'firebase/auth';
 import { Pencil, Trash, PlusSquare, Bug } from 'react-bootstrap-icons';
 import { DatePicker } from 'react-datepicker';
+
+function makeid(length) {
+  var result = '';
+  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() *
+      charactersLength));
+  }
+  return result;
+}
+
 function ModalForm(props) {
   const [show, setShow] = useState(false);
 
@@ -22,7 +34,7 @@ function ModalForm(props) {
   const tipocuentaRef = useRef();
   const claveRef = useRef();
   const clave2Ref = useRef();
-  const catcuentaRef= useRef();
+  const catcuentaRef = useRef();
   //refs de cancha
   const nombreRef = useRef();
   const descripcionRef = useRef();
@@ -36,11 +48,34 @@ function ModalForm(props) {
   const fechaRef = useRef();
   const estadoRef = useRef();
 
+  const [users, setUsers] = useState({});
+  const [canchas, setCanchas] = useState({});
+
   const { currentUser } = useAuthValue();
 
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [submit, setSubmit] = useState(0);
+
+  async function getCanchas() {
+    var querySnapshot = null;
+    switch (props.type) {
+      case "Canchas": {
+        querySnapshot = await getDocs(collection(db, "Canchas"));
+        break;
+      case "Clientes": {
+        querySnapshot = await getDocs(collection(db, "Usuarios"));
+        break;
+      }
+    }
+    const p = [];
+    querySnapshot.forEach((doc) => {
+      p.push({ Id: doc.id, ...doc.data() });
+
+    });
+    setCanchas(p);
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     setSubmit(1);
@@ -101,7 +136,7 @@ function ModalForm(props) {
             Estado: props.type == "Reservas" ? "No Pagado" : "Pagado",
             CalificacionServicio: 0,
             CalificacionSistema: 0,
-            CodigoAcceso: ""
+            CodigoAcceso: props.type == "Reservas" ? "" : makeid(25)
           });
           setSubmit(2);
 
@@ -205,35 +240,35 @@ function ModalForm(props) {
               props.type == "Clientes" ? (
                 <> <Form.Group className="mb-3">
                   <Form.Label>Correo Electrónico</Form.Label>
-                  <Form.Control type="email" disabled={props.do == "Editar" ? true:false} defaultValue={props.do == "Editar" ? props.itemId:""} ref={emailRef} placeholder="correo@gmail.com" />
+                  <Form.Control type="email" disabled={props.do == "Editar" ? true : false} defaultValue={props.do == "Editar" ? props.itemId : ""} ref={emailRef} placeholder="correo@gmail.com" />
                 </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>RUT</Form.Label>
-                    <Form.Control type="text" ref={rutRef} defaultValue={props.do == "Editar" ? props.itemData.rut:""} placeholder="12345678-9" />
+                    <Form.Control type="text" ref={rutRef} defaultValue={props.do == "Editar" ? props.itemData.rut : ""} placeholder="12345678-9" />
                   </Form.Group>
                   <Form.Group className="mb-3" >
                     <Form.Label>Nombres</Form.Label>
-                    <Form.Control type="text" ref={nombresRef} defaultValue={props.do == "Editar" ? props.itemData.nombres:""} placeholder="Ramon Ramon" />
+                    <Form.Control type="text" ref={nombresRef} defaultValue={props.do == "Editar" ? props.itemData.nombres : ""} placeholder="Ramon Ramon" />
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>Apellido Paterno</Form.Label>
-                    <Form.Control type="text" ref={appatRef} defaultValue={props.do == "Editar" ? props.itemData.apellidopaterno:""} placeholder="Araneda" />
+                    <Form.Control type="text" ref={appatRef} defaultValue={props.do == "Editar" ? props.itemData.apellidopaterno : ""} placeholder="Araneda" />
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>Apellido Materno</Form.Label>
-                    <Form.Control type="text" ref={apmatRef} defaultValue={props.do == "Editar" ? props.itemData.apellidomaterno:""} placeholder="Carrasco" />
+                    <Form.Control type="text" ref={apmatRef} defaultValue={props.do == "Editar" ? props.itemData.apellidomaterno : ""} placeholder="Carrasco" />
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>Teléfono</Form.Label>
-                    <Form.Control type="number" ref={telefonoRef} defaultValue={props.do == "Editar" ? props.itemData.telefono:""} placeholder="912345678" />
+                    <Form.Control type="number" ref={telefonoRef} defaultValue={props.do == "Editar" ? props.itemData.telefono : ""} placeholder="912345678" />
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>Celular</Form.Label>
-                    <Form.Control type="number" ref={celularRef} defaultValue={props.do == "Editar" ? props.itemData.celular:""} placeholder="912345678" />
+                    <Form.Control type="number" ref={celularRef} defaultValue={props.do == "Editar" ? props.itemData.celular : ""} placeholder="912345678" />
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>Tipo de Cuenta</Form.Label>
-                    <Form.Select aria-label="Tipo de Cuenta" ref={tipocuentaRef} defaultValue={props.do == "Editar" ? props.itemData.tipo:""}  >
+                    <Form.Select aria-label="Tipo de Cuenta" ref={tipocuentaRef} defaultValue={props.do == "Editar" ? props.itemData.tipo : ""}  >
                       <option>Seleccionar</option>
                       <option value="Usuario">Usuario</option>
                       <option value="Administrador">Administrador</option>
@@ -241,7 +276,7 @@ function ModalForm(props) {
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>Categoria de Cuenta</Form.Label>
-                    <Form.Select aria-label="Categoria de Cuenta" ref={catcuentaRef} defaultValue={props.do == "Editar" ? props.itemData.categoria:""}  >
+                    <Form.Select aria-label="Categoria de Cuenta" ref={catcuentaRef} defaultValue={props.do == "Editar" ? props.itemData.categoria : ""}  >
                       <option>Seleccionar</option>
                       <option value="Lv.1 Basico">Lv.1 Basico</option>
                       <option value="Lv.2 Basico +">Lv.2 Basico +</option>
@@ -251,11 +286,11 @@ function ModalForm(props) {
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>Contraseña</Form.Label>
-                    <Form.Control type="password" ref={claveRef} defaultValue={props.do == "Editar" ? props.itemData.password:""} placeholder="********" />
+                    <Form.Control type="password" ref={claveRef} defaultValue={props.do == "Editar" ? props.itemData.password : ""} placeholder="********" />
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>Repetir Contraseña</Form.Label>
-                    <Form.Control type="password" ref={clave2Ref} defaultValue={props.do == "Editar" ? props.itemData.password:""} placeholder="********" />
+                    <Form.Control type="password" ref={clave2Ref} defaultValue={props.do == "Editar" ? props.itemData.password : ""} placeholder="********" />
                   </Form.Group></>
               ) : (
                 props.type == "Reservas" || props.type == "Horas" ? (
@@ -286,13 +321,13 @@ function ModalForm(props) {
               )
             )}
           </Form></>) : (
-          <>
-            <Form>
-            <Form.Group className="mb-3">
-                    <Form.Label>¿Está seguro de eliminar?</Form.Label>
-                  </Form.Group>
-            </Form>
-          </>)
+            <>
+              <Form>
+                <Form.Group className="mb-3">
+                  <Form.Label>¿Está seguro de eliminar?</Form.Label>
+                </Form.Group>
+              </Form>
+            </>)
 
           }
         </Modal.Body>
