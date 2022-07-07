@@ -2,10 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Button, Spinner } from 'react-bootstrap';
 import { doc, collection, onSnapshot, getDocs, query } from "firebase/firestore";
 import { db } from './../../firebase';
+import { useNavigate } from 'react-router-dom';
 
 function MainListaCanchas() {
     const [canchas, setCanchas] = useState({});
     const [loading, setLoading] = useState(true);
+    let navigate = useNavigate();
+    function handleReserve(e){
+        e.preventDefault();
+        navigate("/reservas", { replace: true })
+    }
     async function getCanchas() {
         setLoading(true);
         const querySnapshot = await getDocs(collection(db, "Canchas"));
@@ -60,7 +66,7 @@ function MainListaCanchas() {
             {loading ? (<></>) : (<><Row><br/></Row>
             <Row>
                 <Col className="text-center mx-auto d-block" md={8}>
-                    <Button href="/" variant="success" >Reserva tu Cancha</Button>
+                    <Button onClick={handleReserve} variant="success" >Reserva tu Cancha</Button>
                 </Col>
             </Row></>)}
             
