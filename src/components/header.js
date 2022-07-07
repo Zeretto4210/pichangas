@@ -19,7 +19,7 @@ function PageHeader() {
                     {currentUser ? (
                         <div>
                             <Nav.Link as={Link} to="/login">Mi Panel</Nav.Link>
-                            <Nav.Link as={Link} to="/" onClick={()=>signOut(auth)}>Cerrar Sesión</Nav.Link>
+                            <Nav.Link as={Link} to="/" onClick={()=>{signOut(auth);}}>Cerrar Sesión</Nav.Link>
                         </div>
                     ) : (
                         <div>

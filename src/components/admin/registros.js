@@ -134,7 +134,7 @@ function AdminRegistros(props) {
               {Array.from(canchas).map((a) => (
                 a.Estado == "No Pagado" ? (<tr>
                   <td>{a.Id}</td>
-                  <td>{new Date(a.Fecha.seconds*1000).toLocaleDateString('es-CL',{weekday:'long', year:'numeric',month:'long', day:'numeric'})}</td>
+                  <td>{new Date(a.Fecha.seconds*1000).toLocaleDateString('es-CL',{weekday:'long', year:'numeric',month:'long', day:'numeric'})}, {new Date(a.Fecha.seconds*1000).toLocaleTimeString('es-CL')}</td>
                   <td>{a.Cancha}</td>
                   <td>{a.Usuario}</td>
                   <td>{a.Estado}</td>
@@ -171,7 +171,7 @@ function AdminRegistros(props) {
               {Array.from(canchas).map((a) => (
                 a.Estado == "Pagado" ? (<tr>
                   <td>{a.Id}</td>
-                  <td>{new Date(a.Fecha.seconds*1000).toLocaleDateString('es-CL',{weekday:'long', year:'numeric',month:'long', day:'numeric'})}</td>
+                  <td>{new Date(a.Fecha.seconds*1000).toLocaleDateString('es-CL',{weekday:'long', year:'numeric',month:'long', day:'numeric'})}, {new Date(a.Fecha.seconds*1000).toLocaleTimeString('es-CL')}</td>
                   <td>{a.Cancha}</td>
                   <td>{a.Usuario}</td>
                   <td>{a.Estado}</td>

@@ -49,32 +49,36 @@ function ModalForm(props) {
   const estadoRef = useRef();
 
   const [users, setUsers] = useState({});
-  const [canchas, setCanchas] = useState({});
-
+  const [fields, setFields] = useState({});
+  const [categories, setCategories] = useState({});
+  const [searching, setSearching] = useState(true);
   const { currentUser } = useAuthValue();
 
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [submit, setSubmit] = useState(0);
 
-  async function getCanchas() {
-    var querySnapshot = null;
-    switch (props.type) {
-      case "Canchas": {
-        querySnapshot = await getDocs(collection(db, "Canchas"));
-        break;
-      }
-      case "Clientes": {
-        querySnapshot = await getDocs(collection(db, "Usuarios"));
-        break;
-      }
-    }
-    const p = [];
-    querySnapshot.forEach((doc) => {
-      p.push({ Id: doc.id, ...doc.data() });
-
+  async function getSelects() {
+    setSearching(true);
+    const queryA = await getDocs(collection(db, "Canchas"));
+    const queryB = await getDocs(collection(db, "Usuarios"));
+    const queryC = await getDocs(collection(db, "CategoriaCliente"));
+    const a = [];
+    const b = [];
+    const c = [];
+    queryA.forEach((doc) => {
+      a.push({ Id: doc.id, ...doc.data() });
     });
-    setCanchas(p);
+    queryB.forEach((doc) => {
+      b.push({ Id: doc.id, ...doc.data() });
+    });
+    queryC.forEach((doc) => {
+      c.push({ Id: doc.id, ...doc.data() });
+    });
+    setFields(a);
+    setUsers(b);
+    setCategories(c);
+    setSearching(false);
   }
 
   async function handleSubmit(e) {
@@ -224,7 +228,9 @@ function ModalForm(props) {
     }
   }
 
-
+  useEffect(() => {
+    getSelects();
+  }, []);
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
@@ -235,7 +241,7 @@ function ModalForm(props) {
         <Modal.Header closeButton>
           <Modal.Title>{props.do} {props.type}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        {searching? (<></>) : (<><Modal.Body>
           {props.do == "Editar" || props.do == "Agregar" ? (<><Form>
             {props.type == "Canchas" ? (
               <> <Form.Group className="mb-3">
@@ -244,7 +250,7 @@ function ModalForm(props) {
               </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label>Descripcion</Form.Label>
-                  <Form.Control type="textarea" ref={descripcionRef} defaultValue={props.do == "Editar" ? props.itemData.Descripcion:""} placeholder="Una cancha muy bonita" />
+                  <Form.Control type="text" ref={descripcionRef} defaultValue={props.do == "Editar" ? props.itemData.Descripcion:""} placeholder="Una cancha muy bonita" />
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label>Capacidad</Form.Label>
@@ -300,11 +306,9 @@ function ModalForm(props) {
                   <Form.Group className="mb-3">
                     <Form.Label>Categoria de Cuenta</Form.Label>
                     <Form.Select aria-label="Categoria de Cuenta" ref={catcuentaRef} defaultValue={props.do == "Editar" ? props.itemData.categoria:""}  >
-                      <option>Seleccionar</option>
-                      <option value="Lv.1 Basico">Lv.1 Basico</option>
-                      <option value="Lv.2 Basico +">Lv.2 Basico +</option>
-                      <option value="Lv.3 Preferencial">Lv.3 Preferencial</option>
-                      <option value="Lv.4 VIP">Lv.4 VIP</option>
+                          {Array.from(categories).map((a) => (
+                            <><option value={a.Nombre}>{a.Nombre}</option></>
+                          ))}
                     </Form.Select>
                   </Form.Group>
                   <Form.Group className="mb-3">
@@ -324,18 +328,18 @@ function ModalForm(props) {
                     <Form.Group className="mb-3">
                       <Form.Label>Cancha</Form.Label>
                       <Form.Select aria-label="Tipo de Cuenta" ref={canchaRef} defaultValue={props.do == "Editar" ? props.itemData.Cancha:""} >
-                        <option>Seleccionar</option>
-                        <option value="Cancha 1">Cancha 1</option>
-                        <option value="Cancha 2">Cancha 2</option>
+                      {Array.from(fields).map((a) => (
+                            <><option value={a.Nombre}>{a.Nombre}</option></>
+                          ))}
                       </Form.Select>
                     </Form.Group>
 
                     <Form.Group className="mb-3">
                       <Form.Label>Usuario</Form.Label>
                       <Form.Select aria-label="Tipo de Cuenta" ref={usuarioRef} defaultValue={props.do == "Editar" ? props.itemData.Usuario:""} >
-                        <option>Seleccionar</option>
-                        <option value="sus@sus.sus">sus@sus.sus</option>
-                        <option value="sas@sas.sas">sas@sas.sas</option>
+                      {Array.from(users).map((a) => (
+                            <><option value={a.correo}>{a.correo}</option></>
+                          ))}
                       </Form.Select>
                     </Form.Group></>
                 ) : (
@@ -353,7 +357,7 @@ function ModalForm(props) {
           </>)
 
           }
-        </Modal.Body>
+        </Modal.Body></>)}
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>Cerrar</Button>
           <Button variant="primary" onClick={handleSubmit} disabled={submit == 1 ? true : false}>{props.do}</Button>
